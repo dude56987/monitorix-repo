@@ -1,0 +1,10 @@
+Package: monitorix-repo
+Version: 0.1
+Section: admin
+Maintainer: Carl J Smith <BM-NBHLt5EUFVEbRCmrbVrfCyaB2c8d24U9>
+Installed-Size: 40
+Priority: optional
+Architecture: all
+Depends: 
+Description: Adds the repos for monitorix.
+ Using apt adds the repos for monitorix to any ubuntu based system.
