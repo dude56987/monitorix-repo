@@ -18,8 +18,6 @@ build-deb:
 	mkdir -p debian/etc/apt;
 	mkdir -p debian/etc/apt/sources.list.d/;
 	mkdir -p debian/etc/apt/trusted.gpg.d/;
-	# make post and pre install scripts have the correct permissions
-	chmod 775 debdata/*
 	# copy over the repo stuff for apt
 	cp -vf monitorix-izzysoft.gpg ./debian/etc/apt/trusted.gpg.d/
 	cp -vf monitorix-izzysoft.list ./debian/etc/apt/sources.list.d/
@@ -30,10 +28,15 @@ build-deb:
 	sed -i.bak 's/\\n*DEBIAN*\\n//g' ./debian/DEBIAN/md5sums
 	sed -i.bak 's/\\n*DEBIAN*//g' ./debian/DEBIAN/md5sums
 	rm -v ./debian/DEBIAN/md5sums.bak
-	cp -rv debdata/. debian/DEBIAN/
-	chmod -Rv go+r debian/
 	# figure out the package size	
 	du -sx --exclude DEBIAN ./debian/ > Installed-Size.txt
+	# copy over package data
+	cp -rv debdata/. debian/DEBIAN/
+	# fix permissions in package
+	chmod -Rv 775 debian/DEBIAN/
+	chmod -Rv ugo+r debian/
+	chmod -Rv go-w debian/
+	chmod -Rv u+w debian/
 	# build the package
 	dpkg-deb --build debian
 	cp -v debian.deb monitorix-repo_UNSTABLE.deb
