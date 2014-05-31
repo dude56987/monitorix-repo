@@ -3,9 +3,9 @@ show:
 run:
 	monitorix
 install: build
-	sudo gdebi --non-interactive monitorix_UNSTABLE.deb
+	sudo gdebi --non-interactive monitorix-repo_UNSTABLE.deb
 uninstall:
-	sudo apt-get purge monitorix
+	sudo apt-get purge monitorix-repo
 build: 
 	sudo make build-deb;
 build-deb:
@@ -19,7 +19,7 @@ build-deb:
 	mkdir -p debian/etc/apt/sources.list.d/;
 	mkdir -p debian/etc/apt/trusted.gpg.d/;
 	# copy over the repo stuff for apt
-	cp -vf monitorix-izzysoft.gpg ./debian/etc/apt/trusted.gpg.d/
+	cp -vf monitorix-izzysoft.asc ./debian/etc/apt/trusted.gpg.d/
 	cp -vf monitorix-izzysoft.list ./debian/etc/apt/sources.list.d/
 	# Create the md5sums file
 	find ./debian/ -type f -print0 | xargs -0 md5sum > ./debian/DEBIAN/md5sums
